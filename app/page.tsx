@@ -1,11 +1,12 @@
 import HeroSection from "@/components/Hero/HeroSection";
-import TextAnimation from "@/components/ui/scroll-text";
+import StatsSection from "@/components/Stats/StatsSection";
 import React from "react";
 
 const HomePage = () => {
   return (
-    <div className="text-primary">
+    <div>
       <HeroSection />
+      <StatsSection />
     </div>
   );
 };
