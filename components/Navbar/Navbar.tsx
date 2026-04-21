@@ -3,17 +3,8 @@
 import Link from "next/link";
 import { motion } from "motion/react";
 import NavbarMobile from "./NavbarMobile";
-
-const navItems = [
-  { label: "Home", href: "#home" },
-  { label: "Stats", href: "#stats" },
-  { label: "Clients", href: "#clients" },
-  { label: "Accredian Edge", href: "#accredian-edge" },
-  { label: "CAT", href: "#cat" },
-  { label: "How It Works", href: "#how-it-works" },
-  { label: "FAQs", href: "#faqs" },
-  { label: "Testimonials", href: "#testimonials" },
-];
+import { navItems } from "@/config/constants";
+import { Button } from "../ui/button";
 
 const Navbar = () => {
   return (
@@ -29,13 +20,11 @@ const Navbar = () => {
             href="#home"
             className="shrink-0 pr-2 text-sm font-semibold tracking-wide text-primary lg:pr-3"
           >
-            <span className="text-lg leading-none lg:text-xl xl:text-2xl">
-              Accredian
-            </span>
+            <span className="text-2xl leading-none ">Accredian</span>
           </Link>
 
           <nav
-            className="hidden min-w-0 flex-1 items-center justify-end gap-0.5 overflow-x-auto whitespace-nowrap pr-2 [scrollbar-width:none] lg:flex xl:justify-center"
+            className="hidden min-w-0 flex-1 items-center justify-center gap-0.5 overflow-x-auto whitespace-nowrap pr-2 [scrollbar-width:none] lg:flex xl:justify-center"
             aria-label="Primary"
           >
             {navItems.map((item, index) => (
@@ -45,7 +34,7 @@ const Navbar = () => {
                 initial={{ opacity: 0, y: -8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.08 + index * 0.06, duration: 0.3 }}
-                className="hover-underline-animation left rounded-md px-2 py-1 text-xs font-medium text-foreground/80 transition-colors hover:text-primary focus-visible:text-primary lg:px-2.5 xl:px-3 xl:text-sm"
+                className="hover-underline-animation left rounded-md px-2 py-1 text-sm font-medium text-foreground/80 transition-colors hover:text-primary focus-visible:text-primary lg:px-2.5 xl:px-3 xl:text-sm"
               >
                 {item.label}
               </motion.a>
@@ -61,9 +50,8 @@ const Navbar = () => {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.22, duration: 0.28 }}
-            className="hidden shrink-0 rounded-full bg-primary px-3 py-1.5 text-xs font-semibold text-primary-foreground transition-opacity hover:opacity-90 lg:inline-flex"
           >
-            Talk To Us
+            <Button className="hidden rounded-full lg:block">Talk to us</Button>
           </motion.a>
         </div>
       </div>
