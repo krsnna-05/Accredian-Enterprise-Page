@@ -1,12 +1,49 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { motion } from "motion/react";
 import NavbarMobile from "./NavbarMobile";
 import { navItems } from "@/config/constants";
 import { Button } from "../ui/button";
+import { cn } from "@/lib/utils";
 
 const Navbar = () => {
+  const [activeHref, setActiveHref] = useState("#home");
+
+  useEffect(() => {
+    const sections = navItems
+      .map((item) => item.href.replace("#", ""))
+      .map((id) => document.getElementById(id))
+      .filter((section): section is HTMLElement => section !== null);
+
+    if (sections.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+
+        if (visible.length > 0) {
+          setActiveHref(`#${visible[0].target.id}`);
+        }
+      },
+      {
+        root: null,
+        rootMargin: "-35% 0px -50% 0px",
+        threshold: [0.2, 0.4, 0.6],
+      },
+    );
+
+    sections.forEach((section) => observer.observe(section));
+
+    return () => {
+      sections.forEach((section) => observer.unobserve(section));
+      observer.disconnect();
+    };
+  }, []);
+
   return (
     <motion.header
       initial={{ y: -24, opacity: 0 }}
@@ -20,25 +57,33 @@ const Navbar = () => {
             href="#home"
             className="shrink-0 pr-2 text-sm font-semibold tracking-wide text-primary lg:pr-3"
           >
-            <span className="text-2xl leading-none ">Accredian</span>
+            <span className="text-2xl leading-none">Accredian</span>
           </Link>
 
           <nav
             className="hidden min-w-0 flex-1 items-center justify-center gap-0.5 overflow-x-auto whitespace-nowrap pr-2 [scrollbar-width:none] lg:flex xl:justify-center"
             aria-label="Primary"
           >
-            {navItems.map((item, index) => (
-              <motion.a
-                key={item.href}
-                href={item.href}
-                initial={{ opacity: 0, y: -8 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.08 + index * 0.06, duration: 0.3 }}
-                className="hover-underline-animation left rounded-md px-2 py-1 text-sm font-medium text-foreground/80 transition-colors hover:text-primary focus-visible:text-primary lg:px-2.5 xl:px-3 xl:text-sm"
-              >
-                {item.label}
-              </motion.a>
-            ))}
+            {navItems.map((item, index) => {
+              const isActive = activeHref === item.href;
+
+              return (
+                <motion.a
+                  key={item.href}
+                  href={item.href}
+                  initial={{ opacity: 0, y: -8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.08 + index * 0.06, duration: 0.3 }}
+                  aria-current={isActive ? "page" : undefined}
+                  className={cn(
+                    "hover-underline-animation left rounded-md px-2 py-1 text-sm font-medium text-foreground/80 transition-colors hover:text-primary focus-visible:text-primary lg:px-2.5 xl:px-3 xl:text-sm",
+                    isActive && "active text-primary",
+                  )}
+                >
+                  {item.label}
+                </motion.a>
+              );
+            })}
           </nav>
 
           <div className="ml-auto lg:hidden">

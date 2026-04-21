@@ -7,7 +7,7 @@ import { Button } from "../ui/button";
 
 const HeroSection = () => {
   return (
-    <section className="relative min-h-screen bg-linear-to-b from-background via-background to-background/95 overflow-hidden pt-10 pb-20">
+    <section id="home" className="relative min-h-screen bg-linear-to-b from-background via-background to-background/95 overflow-hidden pt-10 pb-20">
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           {/* LEFT CONTENT */}
