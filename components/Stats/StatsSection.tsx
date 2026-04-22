@@ -28,7 +28,13 @@ const stats = [
   },
 ];
 
-const AnimatedCounter = ({ target, suffix }: { target: number; suffix: string }) => {
+const AnimatedCounter = ({
+  target,
+  suffix,
+}: {
+  target: number;
+  suffix: string;
+}) => {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
@@ -51,14 +57,18 @@ const AnimatedCounter = ({ target, suffix }: { target: number; suffix: string })
 
   return (
     <span>
-      {count.toLocaleString()}{suffix}
+      {count.toLocaleString()}
+      {suffix}
     </span>
   );
 };
 
 const StatsSection = () => {
   return (
-    <section id="stats" className="relative py-20 md:py-32 bg-background overflow-hidden">
+    <section
+      id="stats"
+      className="relative py-20 md:py-32 bg-background overflow-hidden"
+    >
       {/* Background decorations */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
@@ -93,7 +103,8 @@ const StatsSection = () => {
             viewport={{ once: true, amount: 0.3 }}
             className="text-lg text-muted-foreground max-w-2xl mx-auto"
           >
-            The Numbers Behind <span className="text-primary font-semibold">Our Success</span>
+            The Numbers Behind{" "}
+            <span className="text-primary font-semibold">Our Success</span>
           </motion.p>
         </div>
 
@@ -118,9 +129,14 @@ const StatsSection = () => {
                 <div className="relative z-10">
                   {/* Icon and Number */}
                   <div className="mb-6">
-                    <span className="text-5xl mb-3 inline-block">{stat.icon}</span>
+                    <span className="text-5xl mb-3 inline-block">
+                      {stat.icon}
+                    </span>
                     <div className="text-4xl sm:text-5xl md:text-6xl font-bold text-primary mb-2">
-                      <AnimatedCounter target={stat.number} suffix={stat.suffix} />
+                      <AnimatedCounter
+                        target={stat.number}
+                        suffix={stat.suffix}
+                      />
                     </div>
                   </div>
 

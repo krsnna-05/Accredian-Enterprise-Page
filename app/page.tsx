@@ -1,4 +1,5 @@
 import HeroSection from "@/components/Hero/HeroSection";
+import ClientsSection from "@/components/Clients/ClientsSection";
 import StatsSection from "@/components/Stats/StatsSection";
 import React from "react";
 
@@ -7,6 +8,7 @@ const HomePage = () => {
     <div>
       <HeroSection />
       <StatsSection />
+      <ClientsSection />
     </div>
   );
 };

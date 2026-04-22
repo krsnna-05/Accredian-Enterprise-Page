@@ -110,11 +110,25 @@ body {
   height: 2px;
   bottom: 0;
   left: 0;
-  background-color: #0087ca;
+  background-color: var(--primary);
   transition: transform 0.25s ease-out;
 }
 
 .hover-underline-animation:hover::after {
   transform: scaleX(1);
-  transform-origin: bottom center;
+  transform-origin: bottom left;
+}
+
+.hover-underline-animation.left::after {
+  transform-origin: bottom right;
+}
+
+.hover-underline-animation.left:hover::after {
+  transform-origin: bottom left;
+}
+
+.hover-underline-animation.active::after,
+.hover-underline-animation[aria-current="page"]::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
 }

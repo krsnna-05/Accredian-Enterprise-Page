@@ -19,6 +19,19 @@ const Navbar = () => {
 
     if (sections.length === 0) return;
 
+    const updateActiveFromScroll = () => {
+      const offset = window.scrollY + 140;
+      let current = `#${sections[0].id}`;
+
+      sections.forEach((section) => {
+        if (section.offsetTop <= offset) {
+          current = `#${section.id}`;
+        }
+      });
+
+      setActiveHref(current);
+    };
+
     const observer = new IntersectionObserver(
       (entries) => {
         const visible = entries
@@ -26,21 +39,32 @@ const Navbar = () => {
           .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
 
         if (visible.length > 0) {
-          setActiveHref(`#${visible[0].target.id}`);
+          const id = visible[0].target.getAttribute("id");
+          if (id) setActiveHref(`#${id}`);
+          return;
         }
+
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const id = entry.target.getAttribute("id");
+          if (id) setActiveHref(`#${id}`);
+        });
       },
       {
         root: null,
-        rootMargin: "-35% 0px -50% 0px",
-        threshold: [0.2, 0.4, 0.6],
+        rootMargin: "-25% 0px -45% 0px",
+        threshold: [0.15, 0.3, 0.45, 0.6],
       },
     );
 
     sections.forEach((section) => observer.observe(section));
+    window.addEventListener("scroll", updateActiveFromScroll, { passive: true });
+    updateActiveFromScroll();
 
     return () => {
       sections.forEach((section) => observer.unobserve(section));
       observer.disconnect();
+      window.removeEventListener("scroll", updateActiveFromScroll);
     };
   }, []);
 
@@ -59,7 +83,6 @@ const Navbar = () => {
           >
             <span className="text-2xl leading-none">Accredian</span>
           </Link>
-
           <nav
             className="hidden min-w-0 flex-1 items-center justify-center gap-0.5 overflow-x-auto whitespace-nowrap pr-2 [scrollbar-width:none] lg:flex xl:justify-center"
             aria-label="Primary"
@@ -76,7 +99,7 @@ const Navbar = () => {
                   transition={{ delay: 0.08 + index * 0.06, duration: 0.3 }}
                   aria-current={isActive ? "page" : undefined}
                   className={cn(
-                    "hover-underline-animation left rounded-md px-2 py-1 text-sm font-medium text-foreground/80 transition-colors hover:text-primary focus-visible:text-primary lg:px-2.5 xl:px-3 xl:text-sm",
+                    "nav-link hover-underline-animation left rounded-md px-2 py-1 text-sm font-medium text-foreground/80 transition-colors hover:text-primary focus-visible:text-primary lg:px-2.5 xl:px-3 xl:text-sm",
                     isActive && "active text-primary",
                   )}
                 >

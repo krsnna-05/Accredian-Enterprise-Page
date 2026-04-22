@@ -1,13 +1,16 @@
 "use client";
-
-import React from "react";
 import { motion } from "motion/react";
 import TextAnimation from "@/components/ui/scroll-text";
 import { Button } from "../ui/button";
+import Image from "next/image";
 
 const HeroSection = () => {
   return (
-    <section id="home" className="relative min-h-screen bg-linear-to-b from-background via-background to-background/95 overflow-hidden pt-10 pb-20">
+    <motion.section
+      id="home"
+      className="relative min-h-screen scroll-mt-24 bg-linear-to-b from-background via-background to-background/95 overflow-hidden pb-20"
+    >
+      <div className="h-24" />
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           {/* LEFT CONTENT */}
@@ -93,15 +96,17 @@ const HeroSection = () => {
             {/* Floating background shape */}
             <div className="absolute inset-0 bg-linear-to-br from-primary/10 to-primary/5 rounded-3xl blur-2xl" />
 
-            <img
+            <Image
               src="/hero.png"
               alt="Enterprise Learning Platform"
+              width={500}
+              height={500}
               className="w-full h-full object-cover rounded-xl max-h-87.5 sm:max-h-112.5 md:max-h-125 lg:max-h-none"
             />
           </motion.div>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 
